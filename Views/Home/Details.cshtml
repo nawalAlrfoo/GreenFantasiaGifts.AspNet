@@ -1,0 +1,50 @@
+﻿@model GreenFantasiaGifts011.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name + " | Green Fantasia";
+}
+
+<div class="container my-5 pt-5">
+    <div class="row bg-white shadow-lg rounded-4 overflow-hidden">
+        <div class="col-md-6 p-0">
+            <div class="h-100 overflow-hidden">
+                <img src="@Model.ImageUrl" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 500px;" alt="@Model.Name">
+            </div>
+        </div>
+
+        <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+            <span class="text-success fw-bold mb-2">@Model.Category</span>
+            <h1 class="display-4 fw-bold mb-3">@Model.Name</h1>
+
+            <div class="mb-4">
+                <span class="h2 text-success fw-bold">$@Model.Price</span>
+            </div>
+
+            <p class="text-muted fs-5 mb-5" style="line-height: 1.8;">
+                @Model.Description
+            </p>
+
+            <div class="d-flex gap-3">
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id"
+                   class="btn btn-success btn-lg px-5 rounded-pill shadow">
+                    Add to Cart
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+                    Back to Garden
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-success {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        border: none;
+    }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+</style>

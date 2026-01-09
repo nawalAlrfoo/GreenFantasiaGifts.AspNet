@@ -1,0 +1,86 @@
+﻿@model List<GreenFantasiaGifts011.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="container py-5" style="margin-top: 80px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: #2d5a27; font-weight: 600;">Shopping Cart 🌿</h2>
+        <div>
+            <a asp-action="ClearCart" class="btn btn-outline-danger btn-sm me-2">Clear Cart</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-sm">Continue Shopping</a>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5 shadow-sm rounded-4 bg-white border">
+            <h4 class="text-muted">Your cart is currently empty</h4>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-success px-5 mt-2">Browse Products</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <div class="col-lg-8">
+                @foreach (var item in Model)
+                {
+                    <div class="d-flex align-items-center p-3 mb-3 bg-white shadow-sm rounded-4 border">
+                        <img src="@item.ImageUrl" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="@item.ProductName">
+
+                        <div class="ms-3 flex-grow-1 px-3">
+                            <h6 class="mb-0 fw-bold">@item.ProductName</h6>
+                            <small class="text-muted">Unit Price: @item.Price.ToString("C")</small>
+                        </div>
+
+                        <div class="d-flex align-items-center border rounded-pill bg-light px-2 mx-3">
+                            <a asp-controller="Cart" asp-action="DecreaseQuantity" asp-route-id="@item.ProductId"
+                               class="btn btn-sm text-success fw-bold text-decoration-none">−</a>
+
+                            <span class="mx-2 fw-bold" style="min-width: 20px; text-align: center;">@item.Quantity</span>
+
+                            <a asp-controller="Cart" asp-action="IncreaseQuantity" asp-route-id="@item.ProductId"
+                               class="btn btn-sm text-success fw-bold text-decoration-none">+</a>
+                        </div>
+
+                        <div class="text-end px-3" style="min-width: 100px;">
+                            <strong style="color: #2d5a27;">@item.Total.ToString("C")</strong>
+                        </div>
+
+                        <div class="ps-2">
+                            <a asp-controller="Cart" asp-action="RemoveItem" asp-route-id="@item.ProductId"
+                               class="btn btn-sm text-danger">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-4">
+                <div class="p-4 rounded-4 shadow-sm border bg-light">
+                    <h5 class="mb-4">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>@Model.Sum(x => x.Total).ToString("C")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-success">
+                        <span>Shipping:</span>
+                        <span>Free</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong>Total:</strong>
+                        <strong class="fs-4" style="color: #2d5a27;">@Model.Sum(x => x.Total).ToString("C")</strong>
+                    </div>
+
+                    @* زر الدفع المربوط بالأكشن المحمي *@
+                    <a asp-action="Checkout" class="btn btn-success w-100 py-3 shadow-sm rounded-3 fw-bold">
+                        Proceed to Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

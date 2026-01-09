@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Secure Checkout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="~/css/site.css" rel="stylesheet"/>
+
+
+<div class="container py-5 mt-5 animate__animated animate__fadeIn">
+    <div class="row g-5">
+        <div class="col-md-7 animate__animated animate__fadeInLeft">
+            <h4 class="mb-4 text-success fw-bold">Shipping & Payment</h4>
+            <form id="paymentForm" asp-action="PlaceOrder" method="post">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">FULL NAME</label>
+                        <input type="text" class="form-control rounded-3 py-2" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">ADDRESS</label>
+                        <input type="text" class="form-control rounded-3 py-2" required>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="mb-3 fw-bold">Card Details</h5>
+                <div class="row gy-3">
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">NAME ON CARD</label>
+                        <input type="text" id="inputCardName" class="form-control" maxlength="20" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">CARD NUMBER</label>
+                        <input type="text" id="inputCardNumber" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">EXPIRY</label>
+                        <input type="text" id="inputExpiry" class="form-control" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">CVV</label>
+                        <input type="text" id="inputCVV" class="form-control" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+
+                <button id="btnSubmit" class="w-100 btn btn-success btn-lg mt-5 py-3 rounded-pill fw-bold shadow">
+                    Place Order Now
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-5 animate__animated animate__fadeInRight">
+            <div id="creditCard" class="card p-4 shadow-lg border-0 rounded-4 text-white credit-card-box mb-4"
+                 style="background: linear-gradient(135deg, #1e3d1a 0%, #3a7a33 100%); min-height: 230px;">
+                <div class="d-flex justify-content-between mb-4">
+                    <i class="bi bi-chip fs-1 text-warning"></i>
+                    <i class="bi bi-credit-card-2-front fs-1 opacity-50"></i>
+                </div>
+                <h3 id="displayCardNumber" class="mb-4" style="letter-spacing: 3px; font-family: monospace;">#### #### #### ####</h3>
+                <div class="d-flex justify-content-between text-uppercase">
+                    <div>
+                        <small class="d-block opacity-50" style="font-size: 0.6rem;">Card Holder</small>
+                        <span id="displayCardName" class="fw-bold">YOUR NAME</span>
+                    </div>
+                    <div>
+                        <small class="d-block opacity-50" style="font-size: 0.6rem;">Expires</small>
+                        <span id="displayExpiry" class="fw-bold">MM/YY</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-4 border-0 shadow-sm rounded-4 bg-light">
+                <h6 class="text-muted">Total Payment:</h6>
+                <h2 class="text-success fw-bold">@ViewBag.CartTotal?.ToString("C")</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const inputCardName = document.getElementById('inputCardName');
+        const inputCardNumber = document.getElementById('inputCardNumber');
+        const inputExpiry = document.getElementById('inputExpiry');
+        const creditCard = document.getElementById('creditCard');
+
+        inputCardName.addEventListener('input', (e) => {
+            document.getElementById('displayCardName').innerText = e.target.value.toUpperCase() || "YOUR NAME";
+        });
+
+        inputCardNumber.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '').match(/.{1,4}/g)?.join(' ') || '';
+            e.target.value = val;
+            document.getElementById('displayCardNumber').innerText = val || "#### #### #### ####";
+
+            creditCard.style.transform = "scale(1.05)";
+            setTimeout(() => creditCard.style.transform = "scale(1.02)", 100);
+        });
+
+        inputExpiry.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length >= 2) val = val.substring(0, 2) + '/' + val.substring(2, 4);
+            e.target.value = val;
+            document.getElementById('displayExpiry').innerText = val || "MM/YY";
+        });
+
+        document.getElementById('paymentForm').onsubmit = function() {
+            let btn = document.getElementById('btnSubmit');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+        };
+    </script>
+}

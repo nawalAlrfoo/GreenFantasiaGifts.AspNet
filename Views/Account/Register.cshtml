@@ -1,0 +1,79 @@
+﻿@model GreenFantasiaGifts011.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Us | Green Fantasia Gifts</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet"/>
+   
+</head>
+<body>
+
+    <div class="gift-register-page">
+        <div class="register-box">
+
+            <div class="register-visual">
+                <div class="visual-content">
+                    <span class="brand-badge">🌿 Start Your Journey</span>
+                    <h1>Grow With <span style="color:var(--gold)">Us</span></h1>
+                    <p>Create an account to save your favorite plants and track your green gifts delivery.</p>
+                    <img src="~/images/output-onlinegiftools.gif" alt="Plant Animation" class="plant-image">
+                </div>
+            </div>
+
+            <div class="register-form-section">
+                <div class="form-header">
+                    <h2>Create Account</h2>
+                    <p style="color:#888; margin-bottom:30px;">Join our green community today 🌱</p>
+                </div>
+
+                <form asp-action="Register" method="post">
+                    <div class="input-grid">
+                        <div class="input-field full-width">
+                            <label>Full Name</label>
+                            <input asp-for="Username" type="text" placeholder="John Doe" required />
+                        </div>
+
+                        <div class="input-field full-width">
+                            <label>Email Address</label>
+                            <input asp-for="Email" type="email" placeholder="john@example.com" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label>Password</label>
+                            <input asp-for="Password" type="password" placeholder="••••••••" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="••••••••" required />
+                        </div>
+                    </div>
+
+                    <div style="font-size: 12px; color: #777; margin-bottom: 20px;">
+                        <input type="checkbox" required style="accent-color: var(--main-green)">
+                        I agree to the <a href="#" style="color:var(--main-green)">Terms & Conditions</a>
+                    </div>
+
+                    <button type="submit" class="btn-main">Create Account</button>
+
+                    <div class="form-footer">
+                        <span>Already have an account?</span>
+                        <a asp-action="Login">Login here</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

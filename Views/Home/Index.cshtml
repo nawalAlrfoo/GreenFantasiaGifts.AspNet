@@ -1,0 +1,70 @@
+﻿@model IEnumerable<GreenFantasiaGifts011.Models.Product>
+
+@{
+    ViewData["Title"] = "Home | Green Fantasia Gifts";
+}
+
+<div class="main-wrapper">
+    <section class="modern-hero">
+        <div class="hero-inner container">
+            <div class="hero-text-side">
+                <span class="badge-new animate-fade-in">Organic & Fresh 🌿</span>
+                <h1 class="display-3 fw-bold"> Green <span class="text-gradient"> Fantasia </span></h1>
+                <p class="lead text-secondary">Where Imagination Takes Root — a sanctuary where ideas flourish and grow like living art.</p>
+                <div class="hero-actions mt-4">
+                    <a href="#shop" class="btn-primary-custom">Explore Garden</a>
+                </div>
+            </div>
+            <div class="hero-visual-side">
+                <div class="floating-container">
+                    <img src="~/images/output-onlinegiftools.gif" class="main-gif-animation" alt="Green Fantasia">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="product-showcase py-5">
+           
+
+            <div class="modern-grid">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var p in Model)
+                    {
+                        <div class="modern-card">
+                            <div class="card-img-wrapper">
+                                <span class="card-tag">@p.Category</span>
+                                <img src="@p.ImageUrl" asp-append-version="true" alt="@p.Name" class="product-img">
+                                
+                                <div class="card-overlay">
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@p.Id" 
+                                       class="btn-glass text-decoration-none">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card-body-custom">
+                                <div class="product-info">
+                                    <h5 class="product-name">@p.Name</h5>
+                                    <span class="card-price">$@p.Price</span>
+                                </div>
+                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@p.Id"
+                                   class="btn-add-cart-minimal">
+                                    <i class="bi bi-plus-lg"></i> Gift It
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="bi bi-tree fs-1 text-success opacity-50"></i>
+                        <p class="text-muted">No botanical wonders found yet.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,76 @@
+﻿@model GreenFantasiaGifts011.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Green Fantasia Gifts</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet"/>
+</head>
+<body>
+
+    <div class="gift-login-page">
+        <div class="login-box">
+
+            <div class="login-visual">
+                <div class="visual-content">
+                    <span class="brand-badge">🌿 Green Fantasia Gifts</span>
+                    <h1> Green <span class="text-gradient"> Fantasia </span></h1>
+                    <p>Where Imagination Takes Root.</p>
+                    <img src="~/images/output-onlinegiftools.gif" alt="Plant Animation" class="plant-image" style="width:100%; max-width:300px;">
+                </div>
+            </div>
+
+            <div class="login-form-section">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>We’re happy to see you again 🌸</p>
+                </div>
+
+                <form asp-controller="Account" asp-action="Login" method="post">
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger" style="border-radius: 12px; font-size: 14px;">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <div class="input-field">
+                        <label>Email Address</label>
+                        <input name="email" type="email" placeholder="example@domain.com" required />
+                    </div>
+
+                    <div class="input-field">
+                        <label>Password</label>
+                        <input name="password" type="password" placeholder="••••••••" required />
+                    </div>
+
+                    <div class="form-helper" style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:13px;">
+                        <label style="cursor:pointer">
+                            <input type="checkbox" name="rememberMe" style="accent-color: var(--main-green)"> Remember me
+                        </label>
+                        <a href="#" style="color:var(--main-green); text-decoration:none; font-weight:600;">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-main">Login to Account</button>
+
+                    <div class="form-footer" style="text-align:center; margin-top:20px; font-size:14px;">
+                        <span>Don’t have an account?</span>
+                        <a asp-controller="Account" asp-action="Register">Create one now</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
